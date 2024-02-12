@@ -136,7 +136,7 @@ const EstatePlanningCalculator = () => {
             <h3>Oregon Estate Tax:&nbsp;&nbsp;&nbsp;&nbsp;{oregonCalculatedTax ? formatCurrency(oregonCalculatedTax) : '$0'}</h3>
           </div>
           <div className='esp-result'>
-            <h3>Non Resident Tax:&nbsp;&nbsp;&nbsp;&nbsp;{nonResidentCalculatedTax ? formatCurrency(nonResidentCalculatedTax) : '$0'}</h3>
+            <h3>Non Resident Estate Tax:&nbsp;&nbsp;&nbsp;&nbsp;{nonResidentCalculatedTax ? formatCurrency(nonResidentCalculatedTax) : '$0'}</h3>
           </div>
         </div>
       </div>
