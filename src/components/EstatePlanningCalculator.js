@@ -151,7 +151,7 @@ const EstatePlanningCalculator = () => {
         </div>
         <button className='esp-submit-btn' onClick={() => onSubmit()}>Calculate Estate Tax</button>
         <h2 className='esp-results-title'>Calculated Tax Results</h2>
-        <div className='esp-re sults'>
+        <div className='esp-results'>
           <div>
             <h3>Gross Estate:&nbsp;&nbsp;&nbsp;&nbsp;{grossTaxableEstate ? formatCurrency(grossTaxableEstate): '$0'}</h3>
           </div>
