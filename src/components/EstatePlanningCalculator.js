@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import './EstatePlanningCalculator.css'
-import { Popover, Typography } from '@mui/material'
-import { EstateTaxInputFields, formatCurrency } from '../Utils'
+import { Popover, Typography, IconButton } from '@mui/material'
+import { EstateTaxInputFields, FooterText, PopOverDescriptions, formatCurrency } from '../Utils'
 import { TaxFormField } from './TaxFormField'
+import { InfoOutlined } from '@mui/icons-material'
 
 const EstatePlanningCalculator = () => {  
   const [userInput, setUserInput] = useState({})
@@ -14,6 +15,7 @@ const EstatePlanningCalculator = () => {
 
   const [anchorEl, setAnchorEl] = useState(null)
   const [openPopover, setOpenPopover] = useState(false)
+  const [popoverDescription, setPopoverDescription] = useState('')
 
   const applyTaxTableToGTE = () => {
     const taxTable = [
@@ -109,37 +111,61 @@ const EstatePlanningCalculator = () => {
   return (
     <div className='esp-container'>
       <div className='esp-header'>
-        <h1>Albertazzi Law Estate Planning Calculator</h1>
+        <h1>Estate Tax Calculator</h1>
       </div>
       <div className='esp-content'>
         <div className='esp-form'>
-          <h2>Real Estate</h2>
-          <div className='esp-form-field-group'>
-            <TaxFormField fieldName={EstateTaxInputFields.REAL_ESTETE_OREGON} label='Real Estate in Oregon' setOpenPopover={setOpenPopover} setAnchorEl={setAnchorEl} updateUserInput={updateUserInput} />
-            <TaxFormField fieldName={EstateTaxInputFields.REAL_ESTATE_OTHER_STATES} label='Real Estate in Other States' setOpenPopover={setOpenPopover} setAnchorEl={setAnchorEl} updateUserInput={updateUserInput} />
+          {/* Real Estate */}
+          <div className='esp-form-field-group-title'>
+            <h2>Real Estate</h2>
+            <IconButton onClick={(e) => {setAnchorEl(e.currentTarget); setOpenPopover(true); setPopoverDescription(() => PopOverDescriptions.A)}}>
+              <InfoOutlined />
+            </IconButton>
           </div>
-          <h2>Tangible Personal Property</h2>
           <div className='esp-form-field-group'>
-            <TaxFormField fieldName={EstateTaxInputFields.TANGIBLE_PROPERTY_OREGON} label='Tangible Property in Oregon' setOpenPopover={setOpenPopover} setAnchorEl={setAnchorEl} updateUserInput={updateUserInput} />
-            <TaxFormField fieldName={EstateTaxInputFields.TANGIBLE_PROPERTY_OTHER_STATES} label='Tangible Property in Other States' setOpenPopover={setOpenPopover} setAnchorEl={setAnchorEl} updateUserInput={updateUserInput} />
+            <TaxFormField fieldName={EstateTaxInputFields.REAL_ESTETE_OREGON} label='Real Estate in Oregon' setOpenPopover={setOpenPopover} popOverDescription={PopOverDescriptions.ONE} setOpenPopoverDescription={setPopoverDescription} setAnchorEl={setAnchorEl} updateUserInput={updateUserInput} />
+            <TaxFormField fieldName={EstateTaxInputFields.REAL_ESTATE_OTHER_STATES} label='Real Estate Oudside of Oregon' setOpenPopover={setOpenPopover} popOverDescription={PopOverDescriptions.TWO} setOpenPopoverDescription={setPopoverDescription} setAnchorEl={setAnchorEl} updateUserInput={updateUserInput} />
           </div>
-          <h2>Intangible Personal Property</h2>
+          {/* Tangible Personal Property */}
+          <div className='esp-form-field-group-title'>
+            <h2>Tangible Personal Property</h2>
+            <IconButton onClick={(e) => {setAnchorEl(e.currentTarget); setOpenPopover(true); setPopoverDescription(() => PopOverDescriptions.B)}}>
+              <InfoOutlined />
+            </IconButton>
+          </div>
           <div className='esp-form-field-group'>
-            <TaxFormField fieldName={EstateTaxInputFields.INTANGIBLE_PROPERTY_OREGON} label='Intangible Property in Oregon' setOpenPopover={setOpenPopover} setAnchorEl={setAnchorEl} updateUserInput={updateUserInput} />
-            <TaxFormField fieldName={EstateTaxInputFields.INTANGIBLE_PROPERTY_OTHER_STATES} label='Intangible Property in Other States' setOpenPopover={setOpenPopover} setAnchorEl={setAnchorEl} updateUserInput={updateUserInput} />
+            <TaxFormField fieldName={EstateTaxInputFields.TANGIBLE_PROPERTY_OREGON} label='Tangible Property in Oregon' setOpenPopover={setOpenPopover} popOverDescription={PopOverDescriptions.THREE} setOpenPopoverDescription={setPopoverDescription} setAnchorEl={setAnchorEl} updateUserInput={updateUserInput} />
+            <TaxFormField fieldName={EstateTaxInputFields.TANGIBLE_PROPERTY_OTHER_STATES} label='Tangible Property Oudside of Oregon' setOpenPopover={setOpenPopover} popOverDescription={PopOverDescriptions.FOUR} setOpenPopoverDescription={setPopoverDescription} setAnchorEl={setAnchorEl} updateUserInput={updateUserInput} />
+          </div>
+          {/* Intangible Personal Property */}
+          <div className='esp-form-field-group-title'>
+            <h2>Intangible Personal Property</h2>
+            <IconButton onClick={(e) => {setAnchorEl(e.currentTarget); setOpenPopover(true); setPopoverDescription(() => PopOverDescriptions.C)}}>
+              <InfoOutlined />
+            </IconButton>
+          </div>
+          <div className='esp-form-field-group'>
+            <TaxFormField fieldName={EstateTaxInputFields.INTANGIBLE_PROPERTY_OREGON} label='Intangible Property in Oregon' setOpenPopover={setOpenPopover} popOverDescription={PopOverDescriptions.FIVE} setOpenPopoverDescription={setPopoverDescription} setAnchorEl={setAnchorEl} updateUserInput={updateUserInput} />
+            <TaxFormField fieldName={EstateTaxInputFields.INTANGIBLE_PROPERTY_OTHER_STATES} label='Intangible Property Oudside of Oregon' setOpenPopover={setOpenPopover} popOverDescription={PopOverDescriptions.SIX} setOpenPopoverDescription={setPopoverDescription} setAnchorEl={setAnchorEl} updateUserInput={updateUserInput} />
           </div>
         </div>
         <button className='esp-submit-btn' onClick={() => onSubmit()}>Calculate Estate Tax</button>
-        <h2>Calculated Tax Results</h2>
-        <div className='esp-results'>
-          <div className='esp-result'>
-            <h3>Oregon Estate Tax:&nbsp;&nbsp;&nbsp;&nbsp;{oregonCalculatedTax ? formatCurrency(oregonCalculatedTax) : '$0'}</h3>
+        <h2 className='esp-results-title'>Calculated Tax Results</h2>
+        <div className='esp-re sults'>
+          <div>
+            <h3>Gross Estate:&nbsp;&nbsp;&nbsp;&nbsp;{grossTaxableEstate ? formatCurrency(grossTaxableEstate): '$0'}</h3>
           </div>
-          <div className='esp-result'>
-            <h3>Non Resident Estate Tax:&nbsp;&nbsp;&nbsp;&nbsp;{nonResidentCalculatedTax ? formatCurrency(nonResidentCalculatedTax) : '$0'}</h3>
+          <div className='esp-results-oregon-non-res'>
+            <div className='esp-result'>
+              <h3>Oregon Estate Tax:&nbsp;&nbsp;&nbsp;&nbsp;{oregonCalculatedTax ? formatCurrency(oregonCalculatedTax) : '$0'}</h3>
+            </div>
+            <div className='esp-result'>
+              <h3>Non Resident Estate Tax:&nbsp;&nbsp;&nbsp;&nbsp;{nonResidentCalculatedTax ? formatCurrency(nonResidentCalculatedTax) : '$0'}</h3>
+            </div>
           </div>
         </div>
       </div>
+      <div className='esp-footer'>{FooterText}</div>
       <Popover
         id={null}
         open={openPopover}
@@ -149,7 +175,7 @@ const EstatePlanningCalculator = () => {
           horizontal: 'left',
         }}
       >
-        <Typography sx={{ p: 2 }}>Show field description here...</Typography>
+        <Typography sx={{ p: 2 }}>{popoverDescription}</Typography>
       </Popover>
     </div>
   )

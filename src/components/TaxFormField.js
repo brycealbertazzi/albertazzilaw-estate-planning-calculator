@@ -3,7 +3,7 @@ import { InputAdornment, TextField, IconButton } from '@mui/material';
 import { InfoOutlined } from '@mui/icons-material';
 import './EstatePlanningCalculator.css'
 
-export const TaxFormField = ({fieldName, label, setOpenPopover, setAnchorEl, updateUserInput}) => {
+export const TaxFormField = ({fieldName, label, setOpenPopover, popOverDescription, setOpenPopoverDescription, setAnchorEl, updateUserInput}) => {
     const styles = {
         formField: {
           width: '400px',
@@ -13,7 +13,7 @@ export const TaxFormField = ({fieldName, label, setOpenPopover, setAnchorEl, upd
 
     return (
         <div className='esp-form-field'>
-            <IconButton onClick={(e) => {setAnchorEl(e.currentTarget); setOpenPopover(true)}}>
+            <IconButton onClick={(e) => {setAnchorEl(e.currentTarget); setOpenPopover(true); setOpenPopoverDescription(popOverDescription)}}>
                 <InfoOutlined />
             </IconButton>
             <TextField
